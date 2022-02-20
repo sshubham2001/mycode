@@ -1,0 +1,26 @@
+{
+  "short_name": "Cafe CasaVista Admin Panel",
+  "name": "Cafe CasaVista Admin Panel",
+  "icons": [
+    {
+      "src": "64x64.svg",
+      "type": "image/svg+xml",
+      "sizes": "150x150 32x32 16x16 192x192"
+    },
+    {
+      "src": "splash.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "64x64.svg",
+      "type": "image/svg+xml",
+      "sizes": "150x150"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#00BD87",
+  "background_color": "#ffffff"
+}

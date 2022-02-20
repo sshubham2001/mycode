@@ -1,0 +1,43 @@
+.react-tag-input__input,
+.react-tag-input {
+  background-color: #eeeeee;
+  color: rgb(102, 109, 146);
+}
+
+.react-tag-input__input,
+.react-tag-input::placeholder {
+  color: rgb(102, 109, 146);
+}
+
+.specinput {
+  background-color: #eeeeee;
+  border: none;
+  line-height: 24px;
+  outline: none;
+  padding: 10px;
+}
+
+.mb-6 {
+  margin-bottom: 6px;
+}
+
+.btn-rmv {
+  background-color: #e74c3c;
+  padding: 6px 15px 6px 15px;
+  border: 0;
+  color: #fff;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.btn-box {
+  background-color: #2ecc71;
+  padding: 6px 15px 6px 15px;
+  border: 0;
+  color: #fff;
+  margin-top: 5px;
+}
+
+/* .error {
+  padding: 10px;
+} */
