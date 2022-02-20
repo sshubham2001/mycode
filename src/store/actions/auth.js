@@ -17,19 +17,19 @@ export const adminLogin = (userDetails, history) => async (dispatch) => {
       data: { siteId, status, message, access_token, data: adminDetails },
     } = res;
     if (status) {
-      store.addNotification({
-        title: "Success!",
-        message: message,
-        type: "success",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 2000,
-          onScreen: true,
-        },
-      });
+      // store.addNotification({
+      //   title: "Success!",
+      //   message: message,
+      //   type: "success",
+      //   insert: "top",
+      //   container: "top-right",
+      //   animationIn: ["animate__animated", "animate__fadeIn"],
+      //   animationOut: ["animate__animated", "animate__fadeOut"],
+      //   dismiss: {
+      //     duration: 2000,
+      //     onScreen: true,
+      //   },
+      // });
 
       // Fetching Required Items
       fetchItems();
@@ -46,19 +46,19 @@ export const adminLogin = (userDetails, history) => async (dispatch) => {
         });
       history.push("/");
     } else {
-      store.addNotification({
-        title: "Failed!",
-        message: message,
-        type: "danger",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 2000,
-          onScreen: true,
-        },
-      });
+      // store.addNotification({
+      //   title: "Failed!",
+      //   message: message,
+      //   type: "danger",
+      //   insert: "top",
+      //   container: "top-right",
+      //   animationIn: ["animate__animated", "animate__fadeIn"],
+      //   animationOut: ["animate__animated", "animate__fadeOut"],
+      //   dismiss: {
+      //     duration: 2000,
+      //     onScreen: true,
+      //   },
+      // });
     }
   } catch (error) {
     console.log("🤞Hurray ERROR", error);

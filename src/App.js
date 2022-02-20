@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import ReactNotification from "react-notifications-component";
 import { useSelector, useDispatch } from "react-redux";
 import "react-notifications-component/dist/theme.css";
-import alertSound from "./assets/sound/alert.ogg";
+// import alertSound from "./assets/sound/alert.ogg";
 
 import { InLineLoader } from "./Components/InlineLoader/InlineLoader";
 import ProductRoute from "./containers/ProductRoute/ProductRoute";
@@ -64,35 +64,35 @@ function App() {
   const oldOrderId = localStorage.getItem("oldOrder");
 
   // Fetching Notification API 10 mins each
-  async function fetchAlerts() {
-    const res = await fetch(
-      `${process.env.REACT_APP_DATABASEURL}/public/fetch-new-alert`
-    );
-    console.log("Fetching Alert");
-    const data = await res.json();
-    data.status && dispatch({ type: "FETCH_ALERT", payload: data.data });
-    if (oldOrderId !== data?.data?.orderId) {
-      data.status && localStorage.setItem("oldOrder", data?.data?.orderId);
-    }
-    dispatch(fetchOrder());
-    // console.log(data?.data?.orderId, "ID");
-    // if (oldOrderId != data?.data?.orderId) {
-    //   console.log(oldOrderId, "OLD");
-    //   console.log("Playing Alert");
-    //   let audio = new Audio(
-    //     "https://notificationsounds.com/storage/sounds/file-b8_discreet-song.mp3"
-    //   );
-    //   audio.play();
-    // }
-  }
+  // async function fetchAlerts() {
+  //   const res = await fetch(
+  //     `${process.env.REACT_APP_DATABASEURL}/public/fetch-new-alert`
+  //   );
+  //   console.log("Fetching Alert");
+  //   const data = await res.json();
+  //   data.status && dispatch({ type: "FETCH_ALERT", payload: data.data });
+  //   if (oldOrderId !== data?.data?.orderId) {
+  //     data.status && localStorage.setItem("oldOrder", data?.data?.orderId);
+  //   }
+  //   dispatch(fetchOrder());
+  //   // console.log(data?.data?.orderId, "ID");
+  //   // if (oldOrderId != data?.data?.orderId) {
+  //   //   console.log(oldOrderId, "OLD");
+  //   //   console.log("Playing Alert");
+  //   //   let audio = new Audio(
+  //   //     "https://notificationsounds.com/storage/sounds/file-b8_discreet-song.mp3"
+  //   //   );
+  //   //   audio.play();
+  //   // }
+  // }
 
-  setInterval(() => {
-    fetchAlerts();
-  }, 15 * 60 * 1000);
+  // setInterval(() => {
+  //   fetchAlerts();
+  // }, 15 * 60 * 1000);
 
   return (
     <div>
-      <ReactNotification />
+      {/* <ReactNotification /> */}
       <Suspense fallback={<InLineLoader />}>
         <Switch>
           <Route exact path="/login" component={Login} />
