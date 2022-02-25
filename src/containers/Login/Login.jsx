@@ -35,6 +35,7 @@ export default function Login() {
   const data = {
     email,
     password,
+    storeID:  1000
   };
   const handleSubmit = (e) => {
     if (!email || !password) {

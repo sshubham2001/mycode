@@ -1,5 +1,7 @@
 import axios from "axios";
 import { store } from "react-notifications-component";
+import { message as notify } from 'antd'
+
 
 export const adminLogin = (userDetails, history) => async (dispatch) => {
   try {
@@ -17,9 +19,10 @@ export const adminLogin = (userDetails, history) => async (dispatch) => {
       data: { siteId, status, message, access_token, data: adminDetails },
     } = res;
     if (status) {
+      notify.success(message)
       // store.addNotification({
       //   title: "Success!",
-      //   message: message,
+        // message: message,
       //   type: "success",
       //   insert: "top",
       //   container: "top-right",
@@ -46,6 +49,7 @@ export const adminLogin = (userDetails, history) => async (dispatch) => {
         });
       history.push("/");
     } else {
+      notify.error(message)
       // store.addNotification({
       //   title: "Failed!",
       //   message: message,
