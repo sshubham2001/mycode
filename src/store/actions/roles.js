@@ -103,9 +103,10 @@ export const inviteAdminUser = (userDetails, history) => async (dispatch) => {
   }
 };
 
-export const fetchAdminUser = () => async (dispatch) => {
+export const fetchAdminUser = (storeID) => async (dispatch) => {
   try {
     const token = localStorage.getItem("token");
+    const storeID = localStorage.getItem("storeID");
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -114,7 +115,7 @@ export const fetchAdminUser = () => async (dispatch) => {
     };
     const res = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/admin/fetch-admin`,
-      {},
+      {storeID},
       config
     );
     const {

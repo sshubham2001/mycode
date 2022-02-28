@@ -15,7 +15,7 @@ export const adminLogin = (userDetails, history) => async (dispatch) => {
       config
     )
     const {
-      data: { siteId, status, message, access_token, data: adminDetails },
+      data: { siteId, status, message, storeID, access_token, data: adminDetails },
     } = res
     if (status) {
       notify.success(message)
@@ -40,6 +40,7 @@ export const adminLogin = (userDetails, history) => async (dispatch) => {
       status && localStorage.setItem('token', access_token)
       status && localStorage.setItem('siteId', siteId)
       status && localStorage.setItem('isAuth', JSON.stringify(true))
+      status && localStorage.setItem('storeID', storeID)
       status && localStorage.setItem('admin', adminDetails?.role)
       status &&
         dispatch({
@@ -60,6 +61,7 @@ export const updateSite = (siteDetails, history) => async (dispatch) => {
     const token = localStorage.getItem('token')
     console.log(token)
     const siteId = localStorage.getItem('siteId')
+    const storeID = localStorage.getItem('storeID')
     console.log(siteId)
     const config = {
       headers: {
@@ -69,7 +71,7 @@ export const updateSite = (siteDetails, history) => async (dispatch) => {
     }
     const res = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/admin/update-site-settings`,
-      { ...siteDetails, _id: siteId },
+      { ...siteDetails, _id: siteId, storeID },
       config
     )
     const {
@@ -300,20 +302,9 @@ export const isLoggedIn = () => async (dispatch) => {
       })
     status && localStorage.setItem('admin', data?.role)
   } catch (error) {
-    console.log(error)
-    store.addNotification({
-      title: 'Error!',
-      message: 'Session timed out. Please login again!',
-      type: 'danger',
-      insert: 'top',
-      container: 'top-right',
-      animationIn: ['animate__animated', 'animate__fadeIn'],
-      animationOut: ['animate__animated', 'animate__fadeOut'],
-      dismiss: {
-        duration: 2000,
-        onScreen: true,
-      },
-    })
+    notify.error('Session timed out. Please login again!')
+    
+    
   }
 }
 
