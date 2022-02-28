@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { store } from 'react-notifications-component'
 import { message as notify } from 'antd'
 
 export const adminLogin = (userDetails, history) => async (dispatch) => {
@@ -15,23 +14,17 @@ export const adminLogin = (userDetails, history) => async (dispatch) => {
       config
     )
     const {
-      data: { siteId, status, message, storeID, access_token, data: adminDetails },
+      data: {
+        siteId,
+        status,
+        message,
+        storeID,
+        access_token,
+        data: adminDetails,
+      },
     } = res
     if (status) {
       notify.success(message)
-      // store.addNotification({
-      //   title: "Success!",
-      // message: message,
-      //   type: "success",
-      //   insert: "top",
-      //   container: "top-right",
-      //   animationIn: ["animate__animated", "animate__fadeIn"],
-      //   animationOut: ["animate__animated", "animate__fadeOut"],
-      //   dismiss: {
-      //     duration: 2000,
-      //     onScreen: true,
-      //   },
-      // });
 
       // Fetching Required Items
       fetchItems()
@@ -78,49 +71,15 @@ export const updateSite = (siteDetails, history) => async (dispatch) => {
       data: { status, message },
     } = res
     if (status) {
-      store.addNotification({
-        title: 'Success!',
-        message: message,
-        type: 'success',
-        insert: 'top',
-        container: 'top-right',
-        animationIn: ['animate__animated', 'animate__fadeIn'],
-        animationOut: ['animate__animated', 'animate__fadeOut'],
-        dismiss: {
-          duration: 2000,
-          onScreen: true,
-        },
-      })
+      notify.success(message)
+
       status && history.push('/')
     } else {
-      store.addNotification({
-        title: 'Failed!',
-        message: message,
-        type: 'danger',
-        insert: 'top',
-        container: 'top-right',
-        animationIn: ['animate__animated', 'animate__fadeIn'],
-        animationOut: ['animate__animated', 'animate__fadeOut'],
-        dismiss: {
-          duration: 2000,
-          onScreen: true,
-        },
-      })
+      notify.error(message)
     }
   } catch (error) {
-    store.addNotification({
-      title: 'Failed!',
-      message: 'Session timedout. Please login again!',
-      type: 'danger',
-      insert: 'top',
-      container: 'top-right',
-      animationIn: ['animate__animated', 'animate__fadeIn'],
-      animationOut: ['animate__animated', 'animate__fadeOut'],
-      dismiss: {
-        duration: 2000,
-        onScreen: true,
-      },
-    })
+    notify.error('Session timedout. Please login again!')
+
     localStorage.removeItem('isAuth')
     localStorage.removeItem('token')
   }
@@ -129,9 +88,10 @@ export const updateSite = (siteDetails, history) => async (dispatch) => {
 export const fetchItems = () => async (dispatch) => {
   try {
     const token = localStorage.getItem('token')
-    console.log(token)
+    const storeID = localStorage.getItem('storeID')
+
     const siteId = localStorage.getItem('siteId')
-    console.log(siteId)
+
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -140,8 +100,8 @@ export const fetchItems = () => async (dispatch) => {
     }
     // Fetching Products
     const fetchProduct = await axios.post(
-      `${process.env.REACT_APP_DATABASEURL}/public/fetch-product`,
-      {},
+      `${process.env.REACT_APP_DATABASEURL}/admin/fetch-products`,
+      { storeID },
       config
     )
     const {
@@ -159,8 +119,8 @@ export const fetchItems = () => async (dispatch) => {
 
     // Fetching Categories
     const fetchCategory = await axios.post(
-      `${process.env.REACT_APP_DATABASEURL}/public/fetch-category`,
-      {},
+      `${process.env.REACT_APP_DATABASEURL}/admin/fetch-categories`,
+      { storeID },
       config
     )
     const {
@@ -261,19 +221,7 @@ export const fetchNewNotification = () => async (dispatch) => {
       })
   } catch (error) {
     console.log(error)
-    store.addNotification({
-      title: 'Error!',
-      message: 'Failed to fetch new notification!',
-      type: 'danger',
-      insert: 'top',
-      container: 'top-right',
-      animationIn: ['animate__animated', 'animate__fadeIn'],
-      animationOut: ['animate__animated', 'animate__fadeOut'],
-      dismiss: {
-        duration: 2000,
-        onScreen: true,
-      },
-    })
+    notify.error('Failed to fetch new notification!')
   }
 }
 
@@ -303,8 +251,6 @@ export const isLoggedIn = () => async (dispatch) => {
     status && localStorage.setItem('admin', data?.role)
   } catch (error) {
     notify.error('Session timed out. Please login again!')
-    
-    
   }
 }
 
