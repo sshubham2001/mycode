@@ -149,7 +149,10 @@ const AddProduct = (props) => {
     if (category === undefined) {
       return setError("Please fill required fields *");
     }
+    const storeID = localStorage.getItem("storeID")
+
     const productDetails = {
+      storeID,
       title,
       media: image,
       description,

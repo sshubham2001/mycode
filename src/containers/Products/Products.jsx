@@ -269,7 +269,7 @@ export default function Products() {
 
           <Row>
             {cloneData ? (
-              cloneData && cloneData.length !== 0 ? (
+              cloneData && cloneData.length  > 0 ? (
                 cloneData?.slice(0, visible).map((item, index) => (
                   <Col
                     md={4}
@@ -284,7 +284,7 @@ export default function Products() {
                         id={item._id}
                         description={item.description}
                         title={item.title}
-                        category={item.category.title}
+                        category={item.category?.title}
                         quantity={item.unit}
                         image={item.media[0]}
                         currency={"₹"}
