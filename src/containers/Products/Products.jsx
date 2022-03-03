@@ -73,8 +73,8 @@ const typeSelectOptions = [
   { value: "makeup", label: "Makeup" },
 ];
 const priceSelectOptions = [
-  { value: "highestToLowest", label: "Highest To Lowest", type: 0 },
-  { value: "lowestToHighest", label: "Lowest To Highest", type: 1 },
+  { value: "highestToLowest",  label: "Highest To Lowest", type: 0 },
+  { value: "lowestToHighest",  label: "Lowest To Highest", type: 1 },
 ];
 
 export default function Products() {
@@ -120,12 +120,12 @@ export default function Products() {
   };
 
   function handlePriceSort({ value }) {
-    setPriceOrder(value);
-    if ((value.type = 1)) {
+   setPriceOrder(value);
+    if ((value[0].type === 0)) {
       mainProduct.sort((a, b) => {
         return parseFloat(b.price) - parseFloat(a.price);
       });
-    } else if ((value.type = 0)) {
+    } else if ((value[0].type === 1)) {
       mainProduct.sort((a, b) => {
         return parseFloat(a.price) - parseFloat(b.price);
       });
