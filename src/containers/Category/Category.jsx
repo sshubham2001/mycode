@@ -214,13 +214,13 @@ export default function Category() {
 
           <Wrapper style={{ boxShadow: "0 0 5px rgba(0, 0 , 0, 0.05)" }}>
             <TableWrapper>
-              <StyledTable $gridTemplateColumns="minmax(100px, 70px) minmax(90px, 70px) minmax(70px, 70px) minmax(150px, auto) minmax(150px, auto) auto">
-                <StyledHeadCell>Status</StyledHeadCell>
+              <StyledTable $gridTemplateColumns="minmax(150px, 70px) minmax(90px, 70px) minmax(70px, 70px) minmax(150px, auto) minmax(150px, auto)">
+                <StyledHeadCell>Current Status</StyledHeadCell>
                 <StyledHeadCell>Id</StyledHeadCell>
                 <StyledHeadCell>Image</StyledHeadCell>
                 <StyledHeadCell>Name</StyledHeadCell>
-                <StyledHeadCell>Product Active</StyledHeadCell>
-                <StyledHeadCell>Product Inactive</StyledHeadCell>
+                <StyledHeadCell>Status</StyledHeadCell>
+                {/* <StyledHeadCell>Product Inactive</StyledHeadCell> */}
 
                 {cloneData ? (
                   cloneData.length ? (
@@ -250,13 +250,18 @@ export default function Category() {
                         <StyledCell>
                           <a
                             onClick={() =>
-                              reduxDispatch(activeCategoryProducts(row._id))
+                              {row.isActive ? (
+                                reduxDispatch(inActiveCategoryProducts(row._id))
+                                )
+                                : (
+                                reduxDispatch(activeCategoryProducts(row._id))
+                              )}
                             }
                           >
-                            Set Active
+                           {row.isActive ? "Set InActive" : "Set Active"}
                           </a>
                         </StyledCell>
-                        <StyledCell>
+                        {/* <StyledCell>
                           <a
                             onClick={() =>
                               reduxDispatch(inActiveCategoryProducts(row._id))
@@ -264,7 +269,7 @@ export default function Category() {
                           >
                             Set InActive
                           </a>
-                        </StyledCell>
+                        </StyledCell> */}
                       </React.Fragment>
                     ))
                   ) : (
