@@ -79,7 +79,10 @@ const AddCategory = (props) => {
     if (!title) {
       return setError("Please fill required fields *");
     }
+    const storeID = localStorage.getItem("storeID")
+
     const newCategory = {
+      storeID,
       title,
       description,
       media: image,

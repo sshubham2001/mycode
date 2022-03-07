@@ -1,5 +1,7 @@
 import axios from "axios";
-import { store } from "react-notifications-component";
+import { message as notify } from 'antd'
+
+
 
 export const pushMessage = (pushDetails, history) => async (dispatch) => {
   try {
@@ -19,34 +21,12 @@ export const pushMessage = (pushDetails, history) => async (dispatch) => {
       data: { status, message },
     } = res;
     if (status) {
-      store.addNotification({
-        title: "Success!",
-        message: message,
-        type: "success",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 2000,
-          onScreen: true,
-        },
-      });
+      notify.success(message)
+     
       history.push("/login");
     } else {
-      store.addNotification({
-        title: "Failed!",
-        message: message,
-        type: "danger",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 2000,
-          onScreen: true,
-        },
-      });
+      notify.error(message)
+      
     }
   } catch (error) {
     console.log("🤞Hurray ERROR", error);
@@ -71,33 +51,11 @@ export const inviteAdminUser = (userDetails, history) => async (dispatch) => {
       data: { status, message, access_token },
     } = res;
     if (status) {
-      store.addNotification({
-        title: "Success!",
-        message: message,
-        type: "success",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 2000,
-          onScreen: true,
-        },
-      });
+      notify.success(message)
+      
     } else {
-      store.addNotification({
-        title: "Failed!",
-        message: message,
-        type: "danger",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 2000,
-          onScreen: true,
-        },
-      });
+      notify.error(message)
+      
     }
   } catch (error) {
     console.log("🤞Hurray ERROR", error);
