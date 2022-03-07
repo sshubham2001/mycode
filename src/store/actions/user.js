@@ -1,47 +1,47 @@
-import axios from 'axios'
-import { message as notify } from 'antd'
+import axios from "axios";
+import { message as notify } from "antd";
 
 export const viewOrder = (order) => async (dispatch) => {
   dispatch({
-    type: 'VIEW_ORDER',
+    type: "VIEW_ORDER",
     payload: order,
-  })
-}
+  });
+};
 
 export const fetchUser = (history) => async (dispatch) => {
   try {
-    const token = localStorage && localStorage.getItem('token')
-    console.log(token)
+    const token = localStorage && localStorage.getItem("token");
+    console.log(token);
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         authorization: `Bearer ${token}`,
       },
-    }
+    };
 
     // Fetching Orders
     const fetchUser = await axios.get(
       `${process.env.REACT_APP_DATABASEURL}/admin/admin-fetch-users`,
       config
-    )
+    );
     const {
       data: { status: status, users, message },
-    } = fetchUser
+    } = fetchUser;
     // console.log(orders);
     if (status) {
       dispatch({
-        type: 'FETCH_USERS',
+        type: "FETCH_USERS",
         payload: users,
-      })
+      });
     }
-    !status && notify.error(message)
+    !status && notify.error(message);
 
-    !status && localStorage.removeItem('token')
-    !status && localStorage.removeItem('isAuth')
-    !status && history.push('/login')
+    !status && localStorage.removeItem("token");
+    !status && localStorage.removeItem("isAuth");
+    !status && history.push("/login");
   } catch (error) {
-    console.log(error)
+    console.log(error);
     // localStorage.removeItem("token");
     // localStorage.removeItem("isAuth");
     // store.addNotification({
@@ -59,4 +59,4 @@ export const fetchUser = (history) => async (dispatch) => {
     // });
     // window.location.reload();
   }
-}
+};
