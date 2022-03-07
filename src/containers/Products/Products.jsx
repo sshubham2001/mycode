@@ -73,8 +73,8 @@ const typeSelectOptions = [
   { value: "makeup", label: "Makeup" },
 ];
 const priceSelectOptions = [
-  { value: "highestToLowest",  label: "Highest To Lowest", type: 0 },
-  { value: "lowestToHighest",  label: "Lowest To Highest", type: 1 },
+  { value: "highestToLowest", label: "Highest To Lowest", type: 0 },
+  { value: "lowestToHighest", label: "Lowest To Highest", type: 1 },
 ];
 
 export default function Products() {
@@ -120,12 +120,12 @@ export default function Products() {
   };
 
   function handlePriceSort({ value }) {
-   setPriceOrder(value);
-    if ((value[0].type === 0)) {
+    setPriceOrder(value);
+    if (value[0].type === 0) {
       mainProduct.sort((a, b) => {
         return parseFloat(b.price) - parseFloat(a.price);
       });
-    } else if ((value[0].type === 1)) {
+    } else if (value[0].type === 1) {
       mainProduct.sort((a, b) => {
         return parseFloat(a.price) - parseFloat(b.price);
       });
@@ -269,7 +269,7 @@ export default function Products() {
 
           <Row>
             {cloneData ? (
-              cloneData && cloneData.length  > 0 ? (
+              cloneData && cloneData.length > 0 ? (
                 cloneData?.slice(0, visible).map((item, index) => (
                   <Col
                     md={4}

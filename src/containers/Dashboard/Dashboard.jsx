@@ -30,7 +30,6 @@ const Col = withStyle(Column, () => ({
 
 const Dashboard = () => {
   const adminReport = useSelector((state) => state.dashboard.adminReport);
-  console.log(adminReport, "HEY");
   const [css] = useStyletron();
   const mb30 = css({
     "@media only screen and (max-width: 990px)": {
