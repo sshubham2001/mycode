@@ -249,16 +249,17 @@ export default function Category() {
                         <StyledCell>{row.title}</StyledCell>
                         <StyledCell>
                           <a
-                            onClick={() =>
-                              {row.isActive ? (
-                                reduxDispatch(inActiveCategoryProducts(row._id))
-                                )
-                                : (
-                                reduxDispatch(activeCategoryProducts(row._id))
-                              )}
-                            }
+                            onClick={() => {
+                              row.isActive
+                                ? reduxDispatch(
+                                    inActiveCategoryProducts(row._id)
+                                  )
+                                : reduxDispatch(
+                                    activeCategoryProducts(row._id)
+                                  );
+                            }}
                           >
-                           {row.isActive ? "Set InActive" : "Set Active"}
+                            {row.isActive ? "Set InActive" : "Set Active"}
                           </a>
                         </StyledCell>
                         {/* <StyledCell>

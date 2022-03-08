@@ -1,11 +1,10 @@
 import axios from "axios";
-import { message as notify } from 'antd'
-
-
+import { message as notify } from "antd";
 
 export const pushMessage = (pushDetails, history) => async (dispatch) => {
   try {
     const token = localStorage.getItem("token");
+    const storeID = localStorage.getItem("storeID");
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -14,19 +13,18 @@ export const pushMessage = (pushDetails, history) => async (dispatch) => {
     };
     const res = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/push/send`,
-      pushDetails,
+      { pushDetails, storeID },
       config
     );
     const {
       data: { status, message },
     } = res;
     if (status) {
-      notify.success(message)
-     
+      notify.success(message);
+
       history.push("/login");
     } else {
-      notify.error(message)
-      
+      notify.error(message);
     }
   } catch (error) {
     console.log("🤞Hurray ERROR", error);
@@ -36,6 +34,7 @@ export const pushMessage = (pushDetails, history) => async (dispatch) => {
 export const inviteAdminUser = (userDetails, history) => async (dispatch) => {
   try {
     const token = localStorage.getItem("token");
+    const storeID = localStorage.getItem("storeID");
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -44,18 +43,16 @@ export const inviteAdminUser = (userDetails, history) => async (dispatch) => {
     };
     const res = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/admin/invite-admin`,
-      userDetails,
+      { userDetails, storeID },
       config
     );
     const {
       data: { status, message, access_token },
     } = res;
     if (status) {
-      notify.success(message)
-      
+      notify.success(message);
     } else {
-      notify.error(message)
-      
+      notify.error(message);
     }
   } catch (error) {
     console.log("🤞Hurray ERROR", error);
