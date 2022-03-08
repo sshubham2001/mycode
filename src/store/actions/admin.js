@@ -12,10 +12,10 @@ export const generateMontlyReport = (dates, history) => async (dispatch) => {
         authorization: `Bearer ${token}`,
       },
     };
-
+    dates.storeID = storeID;
     const res = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/admin/generate-report`,
-      { dateOne: dates[0], dateTwo: dates[1], storeID },
+      { dateOne: dates[0], dateTwo: dates[1] },
       config
     );
     res.statusText && dispatch({ type: "STOP_LOADER" });

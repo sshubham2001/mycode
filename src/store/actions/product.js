@@ -13,9 +13,10 @@ export const addProduct = (productDetails) => async (dispatch) => {
         authorization: `Bearer ${token}`,
       },
     };
+    productDetails.storeID = storeID;
     const res = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/admin/create-product`,
-      { productDetails, storeID },
+      productDetails,
       config
     );
     const {
@@ -47,9 +48,10 @@ export const updateProduct = (productDetails) => async (dispatch) => {
         authorization: `Bearer ${token}`,
       },
     };
+    productDetails.storeID = storeID;
     const res = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/admin/update-product`,
-      { productDetails, storeID },
+      productDetails,
       config
     );
     const {

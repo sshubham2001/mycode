@@ -10,9 +10,10 @@ export const acceptInvitation = (userDetails, history) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
+    userDetails.storeID = storeID;
     const res = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/admin/invitation/${userDetails.uuid}`,
-      { userDetails, storeID },
+      userDetails,
       config
     );
     const {
@@ -40,9 +41,10 @@ export const inviteAdminUser = (userDetails, history) => async (dispatch) => {
         authorization: `Bearer ${token}`,
       },
     };
+    userDetails.storeID = storeID;
     const res = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/admin/invite-admin`,
-      { userDetails, storeID },
+      userDetails,
       config
     );
     const {

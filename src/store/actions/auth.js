@@ -177,9 +177,10 @@ export const updateSite = (siteDetails, history) => async (dispatch) => {
         authorization: `Bearer ${token}`,
       },
     };
+    siteDetails.storeID = storeID;
     const res = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/admin/update-site-settings`,
-      { ...siteDetails, _id: siteId, storeID },
+      { ...siteDetails, _id: siteId },
       config
     );
     const {
@@ -238,9 +239,10 @@ export const isLoggedIn = () => async (dispatch) => {
       },
     };
     // Fetching Alerts
+    token.storeID = storeID;
     const fetchData = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/admin/isLoggedin`,
-      { token, storeID },
+      { token },
       config
     );
     const {
