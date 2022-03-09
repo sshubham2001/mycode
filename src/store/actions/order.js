@@ -64,9 +64,10 @@ export const updateOrder = (couponDetails, history) => async (dispatch) => {
         authorization: `Bearer ${token}`,
       },
     };
+    couponDetails.storeID = storeID;
     const res = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/order/update-order-status`,
-      { couponDetails, storeID },
+      couponDetails,
       config
     );
     const {

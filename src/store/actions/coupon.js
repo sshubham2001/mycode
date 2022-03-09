@@ -11,9 +11,10 @@ export const addCoupon = (couponDetails) => async (dispatch) => {
         authorization: `Bearer ${token}`,
       },
     };
+    couponDetails.storeID = storeID;
     const res = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/admin/create-coupon`,
-      { couponDetails, storeID },
+      couponDetails,
       config
     );
     const {
@@ -44,9 +45,10 @@ export const deleteCoupon = (couponDetails) => async (dispatch) => {
         authorization: `Bearer ${token}`,
       },
     };
+    couponDetails.storeID = storeID;
     const res = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/admin/delete-coupon`,
-      { _id: couponDetails, storeID },
+      { _id: couponDetails },
       config
     );
     const {
