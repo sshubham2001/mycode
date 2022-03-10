@@ -1,6 +1,5 @@
 import React, { useState, Suspense, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import ReactNotification from "react-notifications-component";
 import { useSelector, useDispatch } from "react-redux";
 import "react-notifications-component/dist/theme.css";
 // import alertSound from "./assets/sound/alert.ogg";

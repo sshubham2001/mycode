@@ -5,6 +5,7 @@ const initialState = {
   orders: [],
   viewOrder: {},
   loading: false,
+  customLoader: false,
   singleProduct: {},
   newAlert: {},
   adminReport: [],
@@ -65,6 +66,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
+      };
+    case "ON_CUSTOM_LOADER":
+      return {
+        ...state,
+        customLoader: true,
+      };
+    case "OFF_CUSTOM_LOADER":
+      return {
+        ...state,
+        customLoader: false,
       };
     case "FETCH_CATEGORIES":
       return {

@@ -1,8 +1,8 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Scrollbars } from "react-custom-scrollbars";
 import { useDrawerDispatch, useDrawerState } from "../../context/DrawerContext";
-import Uploader from "../../Components/Uploader/Uploader";
+// import Uploader from "../../Components/Uploader/Uploader";
 import Button, { KIND } from "../../Components/Button/Button";
 import DrawerBox from "../../Components/DrawerBox/DrawerBox";
 import { Row, Col } from "../../Components/FlexBox/FlexBox";
@@ -20,20 +20,20 @@ import {
 } from "../DrawerItems/DrawerItems.style";
 import { Upload, Button as ButtonAnt } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { updateProduct } from "../../store/actions/product";
+import { deleteProduct, updateProduct } from "../../store/actions/product";
 
-const options = [
-  { value: "Fruits & Vegetables", name: "Fruits & Vegetables", id: "1" },
-  { value: "Meat & Fish", name: "Meat & Fish", id: "2" },
-  { value: "Purse", name: "Purse", id: "3" },
-  { value: "Hand bags", name: "Hand bags", id: "4" },
-  { value: "Shoulder bags", name: "Shoulder bags", id: "5" },
-  { value: "Wallet", name: "Wallet", id: "6" },
-  { value: "Laptop bags", name: "Laptop bags", id: "7" },
-  { value: "Women Dress", name: "Women Dress", id: "8" },
-  { value: "Outer Wear", name: "Outer Wear", id: "9" },
-  { value: "Pants", name: "Pants", id: "10" },
-];
+// const options = [
+//   { value: "Fruits & Vegetables", name: "Fruits & Vegetables", id: "1" },
+//   { value: "Meat & Fish", name: "Meat & Fish", id: "2" },
+//   { value: "Purse", name: "Purse", id: "3" },
+//   { value: "Hand bags", name: "Hand bags", id: "4" },
+//   { value: "Shoulder bags", name: "Shoulder bags", id: "5" },
+//   { value: "Wallet", name: "Wallet", id: "6" },
+//   { value: "Laptop bags", name: "Laptop bags", id: "7" },
+//   { value: "Women Dress", name: "Women Dress", id: "8" },
+//   { value: "Outer Wear", name: "Outer Wear", id: "9" },
+//   { value: "Pants", name: "Pants", id: "10" },
+// ];
 
 const typeOptions = [
   { value: "Veg", name: "Veg", id: "1" },
@@ -49,6 +49,7 @@ const AddProduct = () => {
   const dispatch = useDrawerDispatch();
   const reduxDispatch = useDispatch();
   const productData = useSelector((state) => state.dashboard.singleProduct);
+  const customLoader = useSelector((state) => state.dashboard.customLoader);
   const data = useDrawerState("data");
   const closeDrawer = useCallback(
     () => dispatch({ type: "CLOSE_DRAWER" }),
@@ -107,7 +108,6 @@ const AddProduct = () => {
     setMedia(files[0].path);
   };
   const onSubmit = (data) => {
-    console.log("newProduct data added");
     const updateDetails = {
       _id: productData.id,
       title: name,
@@ -161,7 +161,10 @@ const AddProduct = () => {
                   <ButtonAnt icon={<UploadOutlined />}>Upload</ButtonAnt>
                 </Upload>
                 {productData.image && (
-                  <img src={productData.image} width="100" height="100" />
+                  <img
+                    src={productData.image}
+                    className="product-update-image"
+                  />
                 )}
               </DrawerBox>
             </Col>
@@ -362,28 +365,20 @@ const AddProduct = () => {
                       },
                     }}
                   />
-                  </FormFields>
-                  <FormFields>
-                    {/* <ButtonAnt type="text" danger >Delete</ButtonAnt> */}
-                        <Button
-                         kind={KIND.minimal}
-                          overrides={{
-                            BaseButton: {
-                              style: ({ $theme }) => ({
-                                width: "50%",
-                                borderTopLeftRadius: "3px",
-                                borderTopRightRadius: "3px",
-                                borderBottomRightRadius: "3px",
-                                borderBottomLeftRadius: "3px",
-                                marginRight: "15px",
-                                color: $theme.colors.red400,
-                              }),
-                            },
-                          }}
-                        >
-                          Delete
-                        </Button>
-                  </FormFields>
+                </FormFields>
+                <FormFields>
+                  <ButtonAnt
+                    type="text"
+                    loading={customLoader}
+                    onClick={() => {
+                      reduxDispatch({ type: "ON_CUSTOM_LOADER" });
+                      reduxDispatch(deleteProduct(productData.id, closeDrawer));
+                    }}
+                    danger
+                  >
+                    Delete Product
+                  </ButtonAnt>
+                </FormFields>
                 {/* <FormFields>
                   <FormLabel>Categories</FormLabel>
                   <Select

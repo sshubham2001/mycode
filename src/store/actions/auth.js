@@ -237,17 +237,14 @@ export const isLoggedIn = () => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    // Fetching Alerts
-    token.storeID = storeID;
     const fetchData = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/admin/isLoggedin`,
-      { token },
+      { token, storeID },
       config
     );
     const {
       data: { status, data },
     } = fetchData;
-    console.log(fetchData);
     status &&
       dispatch({
         type: "ADMIN_DETAILS",

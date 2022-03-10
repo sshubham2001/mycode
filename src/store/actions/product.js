@@ -71,3 +71,39 @@ export const updateProduct = (productDetails) => async (dispatch) => {
     console.log("🤞HurraY ERROR", error);
   }
 };
+
+export const deleteProduct =
+  (productDetails, closeDrawer) => async (dispatch) => {
+    try {
+      const token = localStorage.getItem("token");
+      const storeID = localStorage.getItem("storeID");
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      };
+      const res = await axios.post(
+        `${process.env.REACT_APP_DATABASEURL}/admin/delete-product`,
+        { _id: productDetails, storeID },
+        config
+      );
+      const {
+        data: { status, message, data },
+      } = res;
+      res.status && dispatch({ type: "OFF_CUSTOM_LOADER" });
+      status &&
+        dispatch({
+          type: "FETCH_PRODUCTS",
+          payload: data,
+        });
+      if (status) {
+        notify.success(message);
+        closeDrawer();
+      } else {
+        notify.error(message);
+      }
+    } catch (error) {
+      console.log("🤞HurraY ERROR", error);
+    }
+  };
