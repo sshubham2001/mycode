@@ -362,8 +362,28 @@ const AddProduct = () => {
                       },
                     }}
                   />
-                </FormFields>
-
+                  </FormFields>
+                  <FormFields>
+                    {/* <ButtonAnt type="text" danger >Delete</ButtonAnt> */}
+                        <Button
+                         kind={KIND.minimal}
+                          overrides={{
+                            BaseButton: {
+                              style: ({ $theme }) => ({
+                                width: "50%",
+                                borderTopLeftRadius: "3px",
+                                borderTopRightRadius: "3px",
+                                borderBottomRightRadius: "3px",
+                                borderBottomLeftRadius: "3px",
+                                marginRight: "15px",
+                                color: $theme.colors.red400,
+                              }),
+                            },
+                          }}
+                        >
+                          Delete
+                        </Button>
+                  </FormFields>
                 {/* <FormFields>
                   <FormLabel>Categories</FormLabel>
                   <Select

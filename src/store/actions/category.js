@@ -11,7 +11,6 @@ export const addCategory = (categoryDetails) => async (dispatch) => {
         authorization: `Bearer ${token}`,
       },
     };
-    categoryDetails.storeID = storeID;
     const res = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/admin/create-category`,
       categoryDetails,
@@ -45,10 +44,9 @@ export const activeCategoryProducts = (categoryDetails) => async (dispatch) => {
         authorization: `Bearer ${token}`,
       },
     };
-    categoryDetails.storeID = storeID;
     const res = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/admin/active-category-products`,
-      { _id: categoryDetails },
+      { _id: categoryDetails, storeID },
       config
     );
     const {
@@ -82,10 +80,9 @@ export const inActiveCategoryProducts =
           authorization: `Bearer ${token}`,
         },
       };
-      categoryDetails.storeID = storeID;
       const res = await axios.post(
         `${process.env.REACT_APP_DATABASEURL}/admin/inactive-category-products`,
-        { _id: categoryDetails },
+        { _id: categoryDetails, storeID },
         config
       );
       const {
