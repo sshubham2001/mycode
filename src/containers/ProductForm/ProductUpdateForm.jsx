@@ -50,6 +50,8 @@ const AddProduct = () => {
   const reduxDispatch = useDispatch();
   const productData = useSelector((state) => state.dashboard.singleProduct);
   const customLoader = useSelector((state) => state.dashboard.customLoader);
+  const loading = useSelector((state) => state.dashboard.loading);
+
   const data = useDrawerState("data");
   const closeDrawer = useCallback(
     () => dispatch({ type: "CLOSE_DRAWER" }),
@@ -118,8 +120,10 @@ const AddProduct = () => {
       isActive: itemActive,
       type: itemType,
     };
-    reduxDispatch(updateProduct(updateDetails));
-    closeDrawer();
+    reduxDispatch({
+      type: "START_LOADER",
+    });
+    reduxDispatch(updateProduct(updateDetails, closeDrawer));
   };
 
   return (
@@ -446,6 +450,7 @@ const AddProduct = () => {
 
           <Button
             type="submit"
+            isLoading={loading}
             overrides={{
               BaseButton: {
                 style: ({ $theme }) => ({
