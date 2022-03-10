@@ -55,6 +55,7 @@ const AddProduct = (props) => {
   );
 
   const fetchCategories = useSelector((state) => state.dashboard.categories);
+  const loading = useSelector((state) => state.dashboard.loading);
 
   let options = fetchCategories.map((ele) => {
     return { value: ele.title, id: ele._id, name: ele.title };
@@ -135,6 +136,7 @@ const AddProduct = (props) => {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setImage(reader.result);
+      // setImage();
     };
     setTimeout(() => {
       onSuccess("ok");
@@ -149,7 +151,7 @@ const AddProduct = (props) => {
     if (category === undefined) {
       return setError("Please fill required fields *");
     }
-    const storeID = localStorage.getItem("storeID")
+    const storeID = localStorage.getItem("storeID");
 
     const productDetails = {
       storeID,
@@ -168,9 +170,9 @@ const AddProduct = (props) => {
       category: category[0]?.value,
       specifications: inputList,
     };
-    reduxDispatch(addProduct(productDetails));
+    reduxDispatch({ type: "START_LOADER" });
+    reduxDispatch(addProduct(productDetails, closeDrawer));
     setError("");
-    closeDrawer();
   };
 
   return (
@@ -219,7 +221,9 @@ const AddProduct = (props) => {
               >
                 <Upload
                   customRequest={dummyRequest}
-                  onChange={(file) => setMedia(file)}
+                  onChange={(file) => {
+                    setMedia(file.fileList[0]);
+                  }}
                   listType="picture"
                   maxCount={1}
                 >
@@ -656,6 +660,7 @@ const AddProduct = (props) => {
 
           <Button
             type="submit"
+            isLoading={loading}
             overrides={{
               BaseButton: {
                 style: ({ $theme }) => ({

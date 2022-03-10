@@ -2,9 +2,11 @@ const initialState = {
   products: [],
   categories: [],
   coupons: [],
+  store: [],
   orders: [],
   viewOrder: {},
   loading: false,
+  customLoader: false,
   singleProduct: {},
   newAlert: {},
   adminReport: [],
@@ -20,6 +22,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         products: payload,
+      };
+    case "FETCH_STORE":
+      return {
+        ...state,
+        store: payload,
       };
     case "FETCH_MONTHLY_REPORT":
       return {
@@ -65,6 +72,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
+      };
+    case "ON_CUSTOM_LOADER":
+      return {
+        ...state,
+        customLoader: true,
+      };
+    case "OFF_CUSTOM_LOADER":
+      return {
+        ...state,
+        customLoader: false,
       };
     case "FETCH_CATEGORIES":
       return {
