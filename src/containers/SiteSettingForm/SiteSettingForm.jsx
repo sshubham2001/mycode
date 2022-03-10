@@ -9,9 +9,13 @@ import DrawerBox from "../../Components/DrawerBox/DrawerBox";
 import { Grid, Row, Col } from "../../Components/FlexBox/FlexBox";
 import { Form, FieldDetails } from "../DrawerItems/DrawerItems.style";
 import { FormFields, FormLabel } from "../../Components/FormFields/FormFields";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateSite } from "../../store/actions/auth";
 import { useHistory } from "react-router";
+import { Upload, Button as ButtonAnt } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import "antd/dist/antd.css";
+import { updateStoreDetails } from "../../store/actions/store";
 
 const options = [
   { value: true, label: "Opened" },
@@ -20,12 +24,18 @@ const options = [
 const SiteSettingsForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const storeDetail = useSelector((state) => state.dashboard.store);
+  const loading = useSelector((state) => state.dashboard.loading);
+
   const { register, handleSubmit, setValue } = useForm();
-  const [status, setStatus] = useState([]);
+  const [status, setStatus] = useState(true);
   const [type, setType] = useState([]);
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState();
   const [media, setMedia] = useState();
-  const [name, setName] = useState("");
+  const [image, setImage] = useState();
+  const [name, setName] = useState();
+  const [quote, setQuote] = useState();
   const handleMultiChange = ({ value }) => {
     setType(value);
     setStatus(value[0]?.value);
@@ -33,14 +43,34 @@ const SiteSettingsForm = () => {
   const handleUploader = (files) => {
     setMedia(files);
   };
-  const onSubmit = (data) => {
-    const siteSettingsData = {
-      name,
-      description,
-      status,
+
+  const dummyRequest = ({ file, onSuccess }) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setImage(reader.result);
     };
-    dispatch(updateSite(siteSettingsData, history));
-    // console.log(siteSettingsData);
+    setTimeout(() => {
+      onSuccess("ok");
+    }, 0);
+  };
+
+  const onSubmit = (data) => {
+    const storeSettingsData = {
+      title: name,
+      description,
+      isOpen: status,
+      quote,
+      logo: image,
+    };
+    dispatch({ type: "START_LOADER" });
+    dispatch(updateStoreDetails(storeSettingsData, history));
+
+    setQuote();
+    setDescription();
+
+    // dispatch(updatestore(storeSettingsData, history));
+    // console.log(storeSettingsData);
   };
 
   return (
@@ -50,13 +80,51 @@ const SiteSettingsForm = () => {
         style={{ paddingBottom: 0, background: "none" }}
       >
         <Row>
-          <Col md={4}>
-            <FieldDetails>Upload your site logo here</FieldDetails>
+          <Col lg={4}>
+            <FieldDetails style={{ fontSize: 16 }}>
+              Store is currently{" "}
+              <span
+                style={
+                  storeDetail.isOpen ? { color: "green" } : { color: "tomato" }
+                }
+              >
+                {storeDetail.isOpen ? "Opened" : "Closed"}
+              </span>
+            </FieldDetails>
           </Col>
-
-          <Col md={8}>
-            <DrawerBox>
-              <Uploader onChange={handleUploader} />
+          <Col lg={8}></Col>
+        </Row>
+        <Row>
+          <Col lg={4}>
+            <FieldDetails>Upload your Product image here</FieldDetails>
+          </Col>
+          <Col lg={8}>
+            <DrawerBox
+              overrides={{
+                Block: {
+                  style: {
+                    width: "100%",
+                    height: "auto",
+                    padding: "30px",
+                    borderRadius: "3px",
+                    backgroundColor: "#ffffff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  },
+                },
+              }}
+            >
+              <Upload
+                customRequest={dummyRequest}
+                onChange={(file) => {
+                  setMedia(file.fileList[0]);
+                }}
+                listType="picture"
+                maxCount={1}
+              >
+                <ButtonAnt icon={<UploadOutlined />}>Upload</ButtonAnt>
+              </Upload>
             </DrawerBox>
           </Col>
         </Row>
@@ -73,9 +141,11 @@ const SiteSettingsForm = () => {
               <FormFields>
                 <FormLabel>Site Name</FormLabel>
                 <Input
+                  disabled
                   name="site_name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  placeholder={storeDetail?.title}
                 />
               </FormFields>
 
@@ -83,7 +153,18 @@ const SiteSettingsForm = () => {
                 <FormLabel>Site Description</FormLabel>
                 <Textarea
                   value={description}
+                  placeholder={storeDetail?.description}
                   onChange={(e) => setDescription(e.target.value)}
+                />
+              </FormFields>
+
+              <FormFields>
+                <FormLabel>Quote</FormLabel>
+                <Input
+                  name="site_quote"
+                  placeholder={storeDetail?.quote}
+                  value={quote}
+                  onChange={(e) => setQuote(e.target.value)}
                 />
               </FormFields>
 
@@ -147,6 +228,7 @@ const SiteSettingsForm = () => {
 
               <FormFields>
                 <Button
+                  isLoading={loading}
                   type="submit"
                   overrides={{
                     BaseButton: {

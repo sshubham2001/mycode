@@ -1,6 +1,5 @@
 import React, { useState, Suspense, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import ReactNotification from "react-notifications-component";
 import { useSelector, useDispatch } from "react-redux";
 import "react-notifications-component/dist/theme.css";
 // import alertSound from "./assets/sound/alert.ogg";
@@ -29,6 +28,7 @@ import { fetchOrder } from "./store/actions/order";
 import PrintOrder from "./containers/PrintOrder/PrintOrder";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { fetchStoreDetails } from "./store/actions/store";
 
 function PrivateRoute({ children, ...rest }) {
   const token = localStorage.getItem("token");
@@ -56,6 +56,7 @@ function App() {
   const dispatch = useDispatch();
   const newOrderNotify = useSelector((state) => state.dashboard.newAlert);
   useEffect(() => {
+    dispatch(fetchStoreDetails());
     dispatch(fetchItems());
     dispatch(isLoggedIn());
     // dispatch(fetchNewNotification());

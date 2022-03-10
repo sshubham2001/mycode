@@ -104,16 +104,16 @@ export default function Products() {
     toggleLoading(true);
   }
 
-  const data = [
-    {
-      name: "Maggie Noodles",
-      unit: "500g",
-      image: `${require("../../assets/image/maggi_chicken.jpg").default}`,
-      price: 30,
-      salePrice: 25,
-      discountInPercent: 3,
-    },
-  ];
+  // const data = [
+  //   {
+  //     name: "Maggie Noodles",
+  //     unit: "500g",
+  //     image: `${require("../../assets/image/maggi_chicken.jpg").default}`,
+  //     price: 30,
+  //     salePrice: 25,
+  //     discountInPercent: 3,
+  //   },
+  // ];
 
   const handleLoadMore = () => {
     setVisible((prevValue) => prevValue + 12);
@@ -130,25 +130,6 @@ export default function Products() {
         return parseFloat(a.price) - parseFloat(b.price);
       });
     }
-
-    // if (priceOrder[0].value == "highestToLowest") {
-    //   mainProduct.sort((a, b) => {
-    //     return a.price - b.price;
-    //   });
-    // }
-    // console.log(mainProduct);
-    // console.log(value.length);
-    // if (value.length) {
-    // }
-    // if (value.length) {
-    //   //   refetch({
-    //   //     sortByPrice: value[0].value,
-    //   //   });
-    // } else {
-    //   //   refetch({
-    //   //     sortByPrice: null,
-    //   //   });
-    // }
   }
 
   const handleMultiChange = ({ value }) => {
