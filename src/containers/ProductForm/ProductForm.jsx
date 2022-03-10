@@ -136,6 +136,7 @@ const AddProduct = (props) => {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setImage(reader.result);
+      setImage();
     };
     setTimeout(() => {
       onSuccess("ok");
@@ -220,7 +221,9 @@ const AddProduct = (props) => {
               >
                 <Upload
                   customRequest={dummyRequest}
-                  onChange={(file) => setMedia(file)}
+                  onChange={(file) => {
+                    setMedia(file.fileList[0]);
+                  }}
                   listType="picture"
                   maxCount={1}
                 >
