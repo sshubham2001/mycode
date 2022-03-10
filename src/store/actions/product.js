@@ -1,7 +1,7 @@
 import axios from "axios";
 import { message as notify } from "antd";
 
-export const addProduct = (productDetails) => async (dispatch) => {
+export const addProduct = (productDetails, closeDrawer) => async (dispatch) => {
   try {
     const token = localStorage.getItem("token");
     const storeID = localStorage.getItem("storeID");
@@ -27,8 +27,13 @@ export const addProduct = (productDetails) => async (dispatch) => {
         type: "FETCH_PRODUCTS",
         payload: data,
       });
+    res.statusText &&
+      dispatch({
+        type: "STOP_LOADER",
+      });
     if (status) {
       notify.success(message);
+      closeDrawer();
     } else {
       notify.error(message);
     }
