@@ -2,6 +2,7 @@ const initialState = {
   products: [],
   categories: [],
   coupons: [],
+  store: [],
   orders: [],
   viewOrder: {},
   loading: false,
@@ -21,6 +22,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         products: payload,
+      };
+    case "FETCH_STORE":
+      return {
+        ...state,
+        store: payload,
       };
     case "FETCH_MONTHLY_REPORT":
       return {

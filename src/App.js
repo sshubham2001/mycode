@@ -28,6 +28,7 @@ import { fetchOrder } from "./store/actions/order";
 import PrintOrder from "./containers/PrintOrder/PrintOrder";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
+import { fetchStoreDetails } from "./store/actions/store";
 
 function PrivateRoute({ children, ...rest }) {
   const token = localStorage.getItem("token");
@@ -55,6 +56,7 @@ function App() {
   const dispatch = useDispatch();
   const newOrderNotify = useSelector((state) => state.dashboard.newAlert);
   useEffect(() => {
+    dispatch(fetchStoreDetails());
     dispatch(fetchItems());
     dispatch(isLoggedIn());
     // dispatch(fetchNewNotification());

@@ -136,7 +136,7 @@ const AddProduct = (props) => {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       setImage(reader.result);
-      setImage();
+      // setImage();
     };
     setTimeout(() => {
       onSuccess("ok");
