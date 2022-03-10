@@ -52,6 +52,7 @@ const Topbar = ({ refs }) => {
   const stateDispatch = useDispatch();
   const history = useHistory();
   const admin = useSelector((state) => state.user.admin);
+  const storeDetail = useSelector((state) => state.dashboard.store);
   // const { signout } = React.useContext(AuthContext);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const openDrawer = useCallback(
@@ -64,7 +65,8 @@ const Topbar = ({ refs }) => {
       <Logo>
         <Link to="/">
           <LogoImage
-            src={require("../../assets/image/logo.png").default}
+            style={{ height: 50 }}
+            src={storeDetail?.logo}
             alt="pickbazar-admin"
           />
         </Link>
