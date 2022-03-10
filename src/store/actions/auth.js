@@ -5,7 +5,6 @@ export const fetchItems = () => async (dispatch) => {
   try {
     const token = localStorage.getItem("token");
     const storeID = localStorage.getItem("storeID");
-
     const siteId = localStorage.getItem("siteId");
 
     const config = {
