@@ -69,8 +69,8 @@ export default function Settings() {
         <Col md={6}>
           <SettingsCard
             icon={<SiteSettings />}
-            title="Site Settings"
-            subtitle="View and update your site settings"
+            title="Store Settings"
+            subtitle="View and update your Store settings"
             onClick={() => history.push(SITE_SETTINGS)}
           />
         </Col>
