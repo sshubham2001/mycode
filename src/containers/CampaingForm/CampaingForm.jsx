@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCoupon } from "../../store/actions/coupon";
 import { Upload, Button as ButtonAnt } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import ReactTagInput from "@pathofdev/react-tag-input";
 
 const AddCampaing = (props) => {
   const dispatch = useDrawerDispatch();
@@ -48,6 +49,7 @@ const AddCampaing = (props) => {
   const [error, setError] = useState("");
   const [image, setImage] = useState();
   const [media, setMedia] = useState("");
+  const [user, setUser] = useState();
 
   // For image uplaod dummy request
   const dummyRequest = ({ file, onSuccess }) => {
@@ -73,9 +75,10 @@ const AddCampaing = (props) => {
       maxAmount: amount,
       category: category[0]?.value,
       media: image,
+      email: user,
     };
-    reduxDispatch(addCoupon(newCoupon));
-    closeDrawer();
+    reduxDispatch(addCoupon(newCoupon, closeDrawer));
+    // closeDrawer();
   };
   const handleCategoryChange = ({ value }) => {
     setValue("category", value);
@@ -162,6 +165,24 @@ const AddCampaing = (props) => {
                     value={count}
                     onChange={(e) => setCount(e.target.value)}
                     name="number_of_coupon"
+                  />
+                </FormFields>
+
+                {/* <FormFields>
+                  <FormLabel>Specific User(s)</FormLabel>
+                  <ReactTagInput
+                    tags={users}
+                    onChange={(user) => setUsers(user)}
+                  />
+                </FormFields> */}
+
+                <FormFields>
+                  <FormLabel>Specific User</FormLabel>
+                  <Input
+                    value={user}
+                    onChange={(e) => setUser(e.target.value)}
+                    name="discount_in_percent"
+                    placeholder="Paste user email"
                   />
                 </FormFields>
 
