@@ -21,6 +21,10 @@ const options = [
   { value: true, label: "Opened" },
   { value: false, label: "Closed" },
 ];
+const options2 = [
+  { value: true, label: "Own Delivery" },
+  { value: false, label: "Connect Delivery Fleet" },
+];
 const SiteSettingsForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -30,8 +34,14 @@ const SiteSettingsForm = () => {
 
   const { register, handleSubmit, setValue } = useForm();
   const [status, setStatus] = useState(true);
+  const [deliveryType, setDeliveryType] = useState(true);
   const [type, setType] = useState([]);
+  const [delivery, setDelivery] = useState([]);
   const [description, setDescription] = useState();
+  const [packingCharge, setPackingCharge] = useState();
+  const [deliveryCharge, setDeliveryCharge] = useState();
+  const [storeEmail, setStoreEmail] = useState();
+  const [phone, setPhone] = useState();
   const [media, setMedia] = useState();
   const [image, setImage] = useState();
   const [name, setName] = useState();
@@ -39,6 +49,10 @@ const SiteSettingsForm = () => {
   const handleMultiChange = ({ value }) => {
     setType(value);
     setStatus(value[0]?.value);
+  };
+  const handleMultiChangeDelivery = ({ value }) => {
+    setDelivery(value);
+    setDeliveryType(value[0]?.value);
   };
   const handleUploader = (files) => {
     setMedia(files);
@@ -62,12 +76,21 @@ const SiteSettingsForm = () => {
       isOpen: status,
       quote,
       logo: image,
+      ownDelivery: deliveryType,
+      packingCharge,
+      deliveryCharge,
+      storeEmail,
+      phone,
     };
     dispatch({ type: "START_LOADER" });
     dispatch(updateStoreDetails(storeSettingsData, history));
 
     setQuote();
     setDescription();
+    setPackingCharge();
+    setDeliveryCharge();
+    setStoreEmail();
+    setPhone();
 
     // dispatch(updatestore(storeSettingsData, history));
     // console.log(storeSettingsData);
@@ -90,6 +113,11 @@ const SiteSettingsForm = () => {
               >
                 {storeDetail.isOpen ? "Opened" : "Closed"}
               </span>
+              . Your storeID is{" "}
+              <span style={{ color: "dodgerblue" }}>
+                {storeDetail?.storeID}
+              </span>
+              .
             </FieldDetails>
           </Col>
           <Col lg={8}></Col>
@@ -132,7 +160,7 @@ const SiteSettingsForm = () => {
         <Row>
           <Col md={4}>
             <FieldDetails>
-              Add your site description and necessary information from here
+              Update your store description and necessary information from here
             </FieldDetails>
           </Col>
 
@@ -146,6 +174,26 @@ const SiteSettingsForm = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder={storeDetail?.title}
+                />
+              </FormFields>
+
+              <FormFields>
+                <FormLabel>Contact Number</FormLabel>
+                <Input
+                  name="number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder={storeDetail?.phone}
+                />
+              </FormFields>
+
+              <FormFields>
+                <FormLabel>Store Email Address</FormLabel>
+                <Input
+                  name="email"
+                  value={storeEmail}
+                  onChange={(e) => setStoreEmail(e.target.value)}
+                  placeholder={storeDetail?.storeEmail}
                 />
               </FormFields>
 
@@ -223,6 +271,93 @@ const SiteSettingsForm = () => {
                       },
                     },
                   }}
+                />
+              </FormFields>
+
+              <FormFields>
+                <FormLabel>
+                  Delivery Solution{" "}
+                  <b>
+                    {storeDetail.ownDelivery
+                      ? "(Own Delivery)"
+                      : "(Delivery Fleet Connected)"}
+                  </b>
+                </FormLabel>
+                <Select
+                  options={options2}
+                  labelKey="label"
+                  valueKey="value"
+                  placeholder="Choose delivery solution"
+                  value={delivery}
+                  searchable={false}
+                  onChange={handleMultiChangeDelivery}
+                  overrides={{
+                    Placeholder: {
+                      style: ({ $theme }) => {
+                        return {
+                          ...$theme.typography.fontBold14,
+                          color: $theme.colors.textNormal,
+                        };
+                      },
+                    },
+                    DropdownListItem: {
+                      style: ({ $theme }) => {
+                        return {
+                          ...$theme.typography.fontBold14,
+                          color: $theme.colors.textNormal,
+                        };
+                      },
+                    },
+                    OptionContent: {
+                      style: ({ $theme, $selected }) => {
+                        return {
+                          ...$theme.typography.fontBold14,
+                          color: $selected
+                            ? $theme.colors.textDark
+                            : $theme.colors.textNormal,
+                        };
+                      },
+                    },
+                    SingleValue: {
+                      style: ({ $theme }) => {
+                        return {
+                          ...$theme.typography.fontBold14,
+                          color: $theme.colors.textNormal,
+                        };
+                      },
+                    },
+                    Popover: {
+                      props: {
+                        overrides: {
+                          Body: {
+                            style: { zIndex: 5 },
+                          },
+                        },
+                      },
+                    },
+                  }}
+                />
+              </FormFields>
+
+              <FormFields>
+                <FormLabel>Packing Charge</FormLabel>
+                <Input
+                  name="packing_charge"
+                  type="number"
+                  value={packingCharge}
+                  onChange={(e) => setPackingCharge(e.target.value)}
+                  placeholder={storeDetail?.packingCharge}
+                />
+              </FormFields>
+
+              <FormFields>
+                <FormLabel>Delivery Charge</FormLabel>
+                <Input
+                  type="delivery_charge"
+                  name="site_name"
+                  value={deliveryCharge}
+                  onChange={(e) => setDeliveryCharge(e.target.value)}
+                  placeholder={storeDetail?.deliveryCharge}
                 />
               </FormFields>
 

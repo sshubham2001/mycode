@@ -1,7 +1,7 @@
 import axios from "axios";
 import { message as notify } from "antd";
 
-export const addCoupon = (couponDetails) => async (dispatch) => {
+export const addCoupon = (couponDetails, closeDrawer) => async (dispatch) => {
   try {
     const token = localStorage.getItem("token");
     const storeID = localStorage.getItem("storeID");
@@ -27,6 +27,7 @@ export const addCoupon = (couponDetails) => async (dispatch) => {
       });
     if (status) {
       notify.success(message);
+      closeDrawer();
     } else {
       notify.error(message);
     }
@@ -45,10 +46,9 @@ export const deleteCoupon = (couponDetails) => async (dispatch) => {
         authorization: `Bearer ${token}`,
       },
     };
-    couponDetails.storeID = storeID;
     const res = await axios.post(
       `${process.env.REACT_APP_DATABASEURL}/admin/delete-coupon`,
-      { _id: couponDetails },
+      { _id: couponDetails, storeID },
       config
     );
     const {
