@@ -72,7 +72,7 @@ const AddCampaing = (props) => {
       discount: percent,
       count,
       code,
-      maxAmount: amount,
+      minAmount: amount,
       category: category[0]?.value,
       media: image,
       email: user,
@@ -152,7 +152,7 @@ const AddCampaing = (props) => {
                 <FormFields>
                   <FormLabel>Discount Code*</FormLabel>
                   <Input
-                    value={code}
+                    value={code.toUpperCase()}
                     onChange={(e) => setCode(e.target.value)}
                     name="code"
                   />
