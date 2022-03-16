@@ -75,7 +75,7 @@ const AddCampaing = (props) => {
       minAmount: amount,
       category: category[0]?.value,
       media: image,
-      email: user,
+      user: user,
     };
     reduxDispatch(addCoupon(newCoupon, closeDrawer));
     // closeDrawer();
