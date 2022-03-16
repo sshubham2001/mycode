@@ -72,7 +72,7 @@ const AddCampaing = (props) => {
       discount: percent,
       count,
       code,
-      maxAmount: amount,
+      minAmount: amount,
       category: category[0]?.value,
       media: image,
       email: user,
