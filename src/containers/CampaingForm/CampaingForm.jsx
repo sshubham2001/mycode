@@ -152,7 +152,7 @@ const AddCampaing = (props) => {
                 <FormFields>
                   <FormLabel>Discount Code*</FormLabel>
                   <Input
-                    value={code}
+                    value={code.toUpperCase()}
                     onChange={(e) => setCode(e.target.value)}
                     name="code"
                   />
