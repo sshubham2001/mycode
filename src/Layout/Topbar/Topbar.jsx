@@ -171,6 +171,7 @@ const Topbar = ({ refs }) => {
                   localStorage.removeItem("token");
                   localStorage.removeItem("isAuth");
                   localStorage.removeItem("siteId");
+                  global.socketIO.disconnect();
                   history.push("/login");
                   close();
                 }}
