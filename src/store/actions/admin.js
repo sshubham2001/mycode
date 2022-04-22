@@ -18,7 +18,7 @@ export const generateMontlyReport = (dates, history) => async (dispatch) => {
       { dateOne: dates[0], dateTwo: dates[1] },
       config
     );
-    res.statusText && dispatch({ type: "STOP_LOADER" });
+    res.status && dispatch({ type: "STOP_LOADER" });
     const {
       data: { status, message, data },
     } = res;
