@@ -8,8 +8,8 @@ import {
   ModalFooter,
   ModalButton,
 } from "baseui/modal";
-import useSound from 'use-sound';
-import notificationSfx from '../../../../assets/sound/notification.mp3';
+import useSound from "use-sound";
+import notificationSfx from "../../../../assets/sound/order_alert.mp3";
 import { useHistory } from "react-router-dom";
 
 const Index = () => {
@@ -30,11 +30,11 @@ const Index = () => {
   };
 
   const onClickviewOrder = (e) => {
-    if(realTimeNotification.orderId) {
+    if (realTimeNotification.orderId) {
       history.push(`/view-order/${realTimeNotification.orderId}`);
     }
     setIsOpen(false);
-  }
+  };
 
   return (
     <>
