@@ -151,6 +151,7 @@ export default withRouter(function Sidebar({ refs, style, onMenuItemClick }) {
           localStorage.removeItem("isAuth");
           localStorage.removeItem("siteId");
           localStorage.removeItem("admin");
+          global.socketIO.disconnect();
           history.push("/login");
         }}
       >

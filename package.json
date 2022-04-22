@@ -36,8 +36,10 @@
     "redux": "^4.1.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
+    "socket.io-client": "^4.4.1",
     "styletron-engine-atomic": "^1.4.8",
     "styletron-react": "^6.0.1",
+    "use-sound": "^4.0.1",
     "web-vitals": "^1.0.1",
     "yup": "^0.32.9"
   },

@@ -30,6 +30,14 @@ import PrintOrder from "./containers/PrintOrder/PrintOrder";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { fetchStoreDetails } from "./store/actions/store";
 
+import { Modal } from "./commons/ui";
+
+// SocketIO
+import { io } from "socket.io-client";
+import { listenerNotification } from "./store/actions/socket/notification";
+import config from "./config";
+import { listOrderAlerts } from "./store/actions/orderAlert";
+
 function PrivateRoute({ children, ...rest }) {
   const token = localStorage.getItem("token");
   const isAuthenticated = localStorage.getItem("isAuth");
@@ -55,12 +63,38 @@ function App() {
   const [newOrderId, setNewOrderId] = useState();
   const dispatch = useDispatch();
   const newOrderNotify = useSelector((state) => state.dashboard.newAlert);
+  const adminInfo = useSelector((state) => state.user.admin);
+  const adminValid = useSelector((state) => state.user.adminValid);
+
   useEffect(() => {
     dispatch(fetchStoreDetails());
     dispatch(fetchItems());
     dispatch(isLoggedIn());
     // dispatch(fetchNewNotification());
   }, []);
+
+  useEffect(() => {
+    if(adminInfo?.storeID) {
+      dispatch(listOrderAlerts({storeId: adminInfo.storeID, limit: 3}));
+    }
+  }, [adminInfo])
+
+  useEffect(() => {
+    if (adminValid && adminInfo) {
+      let socket = io(config.HOST_URL, {
+        transports: ["websocket", "polling"],
+      });
+      global.socketIO = socket;
+      let channel = null;
+      if (adminInfo.storeID) {
+        channel = `ADMIN_${adminInfo.storeID}`;
+      }
+      if (channel) {
+        dispatch(listenerNotification(channel));
+        socket.on("connect_error", () => console.log("Error connecting to sockets"));
+      }
+    }
+  }, [adminValid]);
 
   const oldOrderId = localStorage.getItem("oldOrder");
 
@@ -94,6 +128,7 @@ function App() {
   return (
     <div>
       {/* <ReactNotification /> */}
+      <Modal />
       <Suspense fallback={<InLineLoader />}>
         <Switch>
           <Route exact path="/login" component={Login} />

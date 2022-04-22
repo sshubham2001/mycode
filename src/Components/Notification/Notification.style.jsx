@@ -80,6 +80,12 @@ export const Dot = styled("span", ({ $theme }) => ({
 
 export const Title = styled("span", ({ $theme }) => ({
   fontFamily: $theme.typography.primaryFontFamily,
+  color: $theme.colors.textNormal,
+  ...$theme.typography.font14
+}));
+
+export const BoldTitle = styled("span", ({ $theme }) => ({
+  fontFamily: $theme.typography.primaryFontFamily,
   color: $theme.colors.textDark,
   ...getTitleStyle({ $theme }),
 }));

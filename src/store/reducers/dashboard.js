@@ -8,7 +8,7 @@ const initialState = {
   loading: false,
   customLoader: false,
   singleProduct: {},
-  newAlert: {},
+  newAlert: [],
   adminReport: [],
   users: [],
   admins: [],
