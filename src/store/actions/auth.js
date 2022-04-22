@@ -65,19 +65,19 @@ export const fetchItems = () => async (dispatch) => {
     }
 
     // Fetching Alerts
-    const fetchAlert = await axios.get(
-      `${process.env.REACT_APP_DATABASEURL}/public/fetch-new-alert`,
-      config
-    );
-    const {
-      data: { status: status3, data },
-    } = fetchAlert;
-    // localStorage.setItem("oldOrder", data.orderId);
-    status3 &&
-      dispatch({
-        type: "FETCH_ALERT",
-        payload: data,
-      });
+    // const fetchAlert = await axios.get(
+    //   `${process.env.REACT_APP_DATABASEURL}/public/fetch-new-alert`,
+    //   config
+    // );
+    // const {
+    //   data: { status: status3, data },
+    // } = fetchAlert;
+    // // localStorage.setItem("oldOrder", data.orderId);
+    // status3 &&
+    //   dispatch({
+    //     type: "FETCH_ALERT",
+    //     payload: data,
+    //   });
     // Fetching Alerts
     const fetchReport = await axios.get(
       `${process.env.REACT_APP_DATABASEURL}/admin/admin-reports`,
