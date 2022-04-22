@@ -14,7 +14,7 @@ import {
 import { Wrapper, FormWrapper, LogoImage, LogoWrapper } from "./Login.style";
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
-import Logoimage from "../../assets/image/logo.png";
+import Logoimage from "../../assets/image/delivto-logo.png";
 
 const initialValues = {
   email: "",
