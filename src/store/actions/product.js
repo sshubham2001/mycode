@@ -27,7 +27,7 @@ export const addProduct = (productDetails, closeDrawer) => async (dispatch) => {
         type: "FETCH_PRODUCTS",
         payload: data,
       });
-    res.statusText &&
+    res.status &&
       dispatch({
         type: "STOP_LOADER",
       });
@@ -67,7 +67,7 @@ export const updateProduct =
           type: "FETCH_PRODUCTS",
           payload: data,
         });
-      res.statusText &&
+      res.status &&
         dispatch({
           type: "STOP_LOADER",
         });
