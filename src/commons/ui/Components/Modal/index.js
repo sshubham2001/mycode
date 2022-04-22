@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Button } from "baseui/button";
+// import { Button } from "baseui/button";
 import {
   Modal,
   ModalHeader,
@@ -9,7 +9,7 @@ import {
   ModalButton,
 } from "baseui/modal";
 import useSound from "use-sound";
-import notificationSfx from "../../../../assets/sound/order_alert.mp3";
+import notificationSfx from "../../../../assets/sound/warning_alert.mp3";
 import { useHistory } from "react-router-dom";
 
 const Index = () => {
