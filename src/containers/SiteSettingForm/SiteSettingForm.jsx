@@ -46,6 +46,12 @@ const SiteSettingsForm = () => {
   const [image, setImage] = useState();
   const [name, setName] = useState();
   const [quote, setQuote] = useState();
+  const [latitude, setLatitude] = useState();
+  const [longitude, setLongitude] = useState();
+  const [mapLink, setMapLink] = useState();
+  const [instagramLink, setInstagramLink] = useState();
+  const [facebookLink, setFacebookLink] = useState();
+
   const handleMultiChange = ({ value }) => {
     setType(value);
     setStatus(value[0]?.value);
@@ -81,6 +87,11 @@ const SiteSettingsForm = () => {
       deliveryCharge,
       storeEmail,
       phone,
+      latitude,
+      longitude,
+      mapLink,
+      facebookLink,
+      instagramLink,
     };
     dispatch({ type: "START_LOADER" });
     dispatch(updateStoreDetails(storeSettingsData, history));
@@ -91,6 +102,11 @@ const SiteSettingsForm = () => {
     setDeliveryCharge();
     setStoreEmail();
     setPhone();
+    setLatitude();
+    setLongitude();
+    setInstagramLink();
+    setFacebookLink();
+    setMapLink();
 
     // dispatch(updatestore(storeSettingsData, history));
     // console.log(storeSettingsData);
@@ -124,7 +140,7 @@ const SiteSettingsForm = () => {
         </Row>
         <Row>
           <Col lg={4}>
-            <FieldDetails>Upload your Product image here</FieldDetails>
+            <FieldDetails>Upload your store logo here</FieldDetails>
           </Col>
           <Col lg={8}>
             <DrawerBox
@@ -353,13 +369,85 @@ const SiteSettingsForm = () => {
               <FormFields>
                 <FormLabel>Delivery Charge</FormLabel>
                 <Input
-                  type="delivery_charge"
-                  name="site_name"
+                  type="number"
+                  name="delivery_charge"
                   value={deliveryCharge}
                   onChange={(e) => setDeliveryCharge(e.target.value)}
                   placeholder={storeDetail?.deliveryCharge}
                 />
               </FormFields>
+
+              <FormFields>
+                <FormLabel>Store Coordinates</FormLabel>
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <Input
+                    type="number"
+                    name="latitude"
+                    value={latitude}
+                    onChange={(e) => setLatitude(e.target.value)}
+                    placeholder={
+                      storeDetail?.latitude ? storeDetail?.latitude : "Latitude"
+                    }
+                  />
+                  <Input
+                    type="number"
+                    name="longitude"
+                    value={longitude}
+                    onChange={(e) => setLongitude(e.target.value)}
+                    placeholder={
+                      storeDetail?.longitude
+                        ? storeDetail?.longitude
+                        : "Longitude"
+                    }
+                  />
+                </div>
+              </FormFields>
+
+              <FormFields>
+                <FormLabel>Google Map Link</FormLabel>
+                <Input
+                  type="text"
+                  name="map_link"
+                  value={mapLink}
+                  onChange={(e) => setMapLink(e.target.value)}
+                  placeholder={storeDetail?.mapLink}
+                />
+              </FormFields>
+
+              <FormFields>
+                <FormLabel>Instagram Link</FormLabel>
+                <Input
+                  type="text"
+                  name="instagram_link"
+                  value={instagramLink}
+                  onChange={(e) => setInstagramLink(e.target.value)}
+                  placeholder={storeDetail?.instagramLink}
+                />
+              </FormFields>
+
+              <FormFields>
+                <FormLabel>Facebook Link</FormLabel>
+                <Input
+                  type="text"
+                  name="facebook_link"
+                  value={facebookLink}
+                  onChange={(e) => setFacebookLink(e.target.value)}
+                  placeholder={storeDetail?.facebookLink}
+                />
+              </FormFields>
+
+              {/* <FormFields>
+                <FormLabel>Delivery Charge</FormLabel>
+                <Input
+                  type="text"
+                  name="delivery_charge"
+                  value={deliveryCharge}
+                  onChange={(e) => setDeliveryCharge(e.target.value)}
+                  placeholder={storeDetail?.deliveryCharge}
+                />
+              </FormFields> */}
 
               <FormFields>
                 <Button
