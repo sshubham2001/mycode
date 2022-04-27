@@ -5,16 +5,9 @@ import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { updateOrder } from "../../store/actions/order";
+import { fetchSingleOrder, updateOrder } from "../../store/actions/order";
 import { useParams } from "react-router-dom";
-
-const orderStatusOptions = [
-  { value: "Received", label: "Received" },
-  { value: "Confirmed", label: "Confirmed" },
-  { value: "Dispatched", label: "Dispatched" },
-  { value: "Delivered", label: "Delivered" },
-  { value: "Cancelled", label: "Cancel Order" },
-];
+import { useEffect } from "react";
 
 const ViewOrder = () => {
   let { id } = useParams();
@@ -22,7 +15,31 @@ const ViewOrder = () => {
   const dispatch = useDispatch();
   const [orderStatus, setOrderStatus] = useState([]);
   const order = useSelector((state) => state.dashboard.viewOrder);
-  console.log(order);
+  const storeDetails = useSelector((state) => state.dashboard.store);
+
+  const orderStatusOptions = storeDetails?.ownDelivery
+    ? [
+        { value: "Received", label: "Received" },
+        { value: "Confirmed", label: "Confirmed" },
+        { value: "Dispatched", label: "Dispatched" },
+        { value: "Delivered", label: "Delivered" },
+        { value: "Cancelled", label: "Cancel Order" },
+      ]
+    : [
+        { value: "Received", label: "Received" },
+        { value: "Confirmed", label: "Confirmed" },
+        { value: "Dunzo Booked", label: "Book Dunzo" },
+        { value: "Dispatched", label: "Dispatched" },
+        { value: "Delivered", label: "Delivered" },
+        { value: "Cancelled", label: "Cancel Order" },
+        { value: "Dunzo Cancelled", label: "Cancel Dunzo" },
+      ];
+
+  let orderData = { orderID: id };
+
+  useEffect(() => {
+    dispatch(fetchSingleOrder(orderData));
+  }, [id]);
   const handleUpdateOrderStatus = ({ value }) => {
     setOrderStatus(value);
     const data = {
@@ -52,16 +69,14 @@ const ViewOrder = () => {
           PRINT BILL <i class="bi bi-printer-fill"></i>
         </a>
         <div className="invoice-title">
-          <h2 style={{ textAlign: "center" }}>
-            {process.env.REACT_APP_STORE_NAME}
+          <h2 style={{ textAlign: "center", textTransform: "uppercase" }}>
+            {storeDetails?.title}
           </h2>
-          <p style={{ textAlign: "center" }}>
-            #{process.env.REACT_APP_STORE_ADDRESS}
-          </p>
+          {/* <p style={{ textAlign: "center" }}>{storeDetails?.address}</p> */}
           <div id="main-title">
             <h4>ORDER DETAILS</h4>
             <div classNameName="user-details">
-              <span>{order.user?.name}</span>
+              <span>{order.shippingAddress?.name}</span>
               <br />
               <span>{order.shippingAddress?.number}</span>
               <br />
@@ -85,9 +100,12 @@ const ViewOrder = () => {
             </div>
           </div>
 
-          <span id="date">
-            {dayjs(order.date).format("DD-MM-YYYY hh:mm A")}
-          </span>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span id="date">
+              {dayjs(order.date).format("DD-MM-YYYY hh:mm A")}
+            </span>
+            <span id="date">Payment: {order?.payment}</span>
+          </div>
         </div>
 
         <div className="invoice-details">
