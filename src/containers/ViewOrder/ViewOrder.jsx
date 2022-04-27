@@ -9,14 +9,6 @@ import { fetchSingleOrder, updateOrder } from "../../store/actions/order";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 
-const orderStatusOptions = [
-  { value: "Received", label: "Received" },
-  { value: "Confirmed", label: "Confirmed" },
-  { value: "Dispatched", label: "Dispatched" },
-  { value: "Delivered", label: "Delivered" },
-  { value: "Cancelled", label: "Cancel Order" },
-];
-
 const ViewOrder = () => {
   let { id } = useParams();
   const history = useHistory();
@@ -24,7 +16,27 @@ const ViewOrder = () => {
   const [orderStatus, setOrderStatus] = useState([]);
   const order = useSelector((state) => state.dashboard.viewOrder);
   const storeDetails = useSelector((state) => state.dashboard.store);
+
+  const orderStatusOptions = storeDetails?.ownDelivery
+    ? [
+        { value: "Received", label: "Received" },
+        { value: "Confirmed", label: "Confirmed" },
+        { value: "Dispatched", label: "Dispatched" },
+        { value: "Delivered", label: "Delivered" },
+        { value: "Cancelled", label: "Cancel Order" },
+      ]
+    : [
+        { value: "Received", label: "Received" },
+        { value: "Confirmed", label: "Confirmed" },
+        { value: "Dunzo Booked", label: "Book Dunzo" },
+        { value: "Dispatched", label: "Dispatched" },
+        { value: "Delivered", label: "Delivered" },
+        { value: "Cancelled", label: "Cancel Order" },
+        { value: "Dunzo Cancelled", label: "Cancel Dunzo" },
+      ];
+
   let orderData = { orderID: id };
+
   useEffect(() => {
     dispatch(fetchSingleOrder(orderData));
   }, [id]);
@@ -57,12 +69,14 @@ const ViewOrder = () => {
           PRINT BILL <i class="bi bi-printer-fill"></i>
         </a>
         <div className="invoice-title">
-          <h2 style={{ textAlign: "center" }}>{storeDetails?.title}</h2>
-          <p style={{ textAlign: "center" }}>{storeDetails?.address}</p>
+          <h2 style={{ textAlign: "center", textTransform: "uppercase" }}>
+            {storeDetails?.title}
+          </h2>
+          {/* <p style={{ textAlign: "center" }}>{storeDetails?.address}</p> */}
           <div id="main-title">
             <h4>ORDER DETAILS</h4>
             <div classNameName="user-details">
-              <span>{order.user?.name}</span>
+              <span>{order.shippingAddress?.name}</span>
               <br />
               <span>{order.shippingAddress?.number}</span>
               <br />
@@ -86,9 +100,12 @@ const ViewOrder = () => {
             </div>
           </div>
 
-          <span id="date">
-            {dayjs(order.date).format("DD-MM-YYYY hh:mm A")}
-          </span>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span id="date">
+              {dayjs(order.date).format("DD-MM-YYYY hh:mm A")}
+            </span>
+            <span id="date">Payment: {order?.payment}</span>
+          </div>
         </div>
 
         <div className="invoice-details">

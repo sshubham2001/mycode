@@ -35,7 +35,7 @@ const PrintOrder = () => {
         </p>
         <p className="centered">{storeDetails?.address}</p>
         <p className="centered">
-          {order.user?.name}
+          {order.shippingAddress?.name}
           <br />
           {order.shippingAddress?.number}
           <br />
@@ -48,7 +48,10 @@ const PrintOrder = () => {
               <p>Notes: {order.shippingAddress?.landmark}</p>
             </>
           )}
-          <small>{dayjs(order.date).format("DD-MM-YYYY hh:mm A")}</small>
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
+            <small>{dayjs(order.date).format("DD-MM-YYYY hh:mm A")}</small>
+            <small>Payment: {order?.payment}</small>
+          </div>
         </p>
         {/* <div style={{ marginBottom: "1px solid #000" }}></div> */}
         <table>

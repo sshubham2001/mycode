@@ -101,35 +101,35 @@ export default function Orders() {
     history.push(`/view-order/${order._id}`);
   };
 
-  const [useCss, theme] = themedUseStyletron();
-  const sent = useCss({
-    ":before": {
-      content: '""',
-      backgroundColor: theme.colors.primary,
-    },
-  });
-  const failed = useCss({
-    ":before": {
-      content: '""',
-      backgroundColor: theme.colors.red400,
-    },
-  });
-  const processing = useCss({
-    ":before": {
-      content: '""',
-      backgroundColor: theme.colors.textNormal,
-    },
-  });
-  const paid = useCss({
-    ":before": {
-      content: '""',
-      backgroundColor: theme.colors.blue400,
-    },
-  });
+  // const [useCss, theme] = themedUseStyletron();
+  // const sent = useCss({
+  //   ":before": {
+  //     content: '""',
+  //     backgroundColor: theme.colors.primary,
+  //   },
+  // });
+  // const failed = useCss({
+  //   ":before": {
+  //     content: '""',
+  //     backgroundColor: theme.colors.red400,
+  //   },
+  // });
+  // const processing = useCss({
+  //   ":before": {
+  //     content: '""',
+  //     backgroundColor: theme.colors.textNormal,
+  //   },
+  // });
+  // const paid = useCss({
+  //   ":before": {
+  //     content: '""',
+  //     backgroundColor: theme.colors.blue400,
+  //   },
+  // });
 
   const [status, setStatus] = useState([]);
-  const [limit, setLimit] = useState([]);
-  const [search, setSearch] = useState([]);
+  // const [limit, setLimit] = useState([]);
+  // const [search, setSearch] = useState([]);
 
   function handleStatus({ value }) {
     setStatus(value);
@@ -144,31 +144,31 @@ export default function Orders() {
     }
   }
 
-  function handleLimit({ value }) {
-    setLimit(value);
-  }
-  function handleSearch(event) {
-    const { value } = event.currentTarget;
-    setSearch(value);
-  }
-  function onAllCheck(event) {
-    if (event.target.checked) {
-      const idx = data && data.orders.map((order) => order.id);
-      setCheckedId(idx);
-    } else {
-      setCheckedId([]);
-    }
-    setChecked(event.target.checked);
-  }
+  // function handleLimit({ value }) {
+  //   setLimit(value);
+  // }
+  // function handleSearch(event) {
+  //   const { value } = event.currentTarget;
+  //   setSearch(value);
+  // }
+  // function onAllCheck(event) {
+  //   if (event.target.checked) {
+  //     const idx = data && data.orders.map((order) => order.id);
+  //     setCheckedId(idx);
+  //   } else {
+  //     setCheckedId([]);
+  //   }
+  //   setChecked(event.target.checked);
+  // }
 
-  function handleCheckbox(event) {
-    const { name } = event.currentTarget;
-    if (!checkedId.includes(name)) {
-      setCheckedId((prevState) => [...prevState, name]);
-    } else {
-      setCheckedId((prevState) => prevState.filter((id) => id !== name));
-    }
-  }
+  // function handleCheckbox(event) {
+  //   const { name } = event.currentTarget;
+  //   if (!checkedId.includes(name)) {
+  //     setCheckedId((prevState) => [...prevState, name]);
+  //   } else {
+  //     setCheckedId((prevState) => prevState.filter((id) => id !== name));
+  //   }
+  // }
   return (
     <Grid fluid={true}>
       <Row>
@@ -228,7 +228,7 @@ export default function Orders() {
           </Header>
           <Wrapper style={{ boxShadow: "0 0 5px rgba(0, 0 , 0, 0.05)" }}>
             <TableWrapper>
-              <StyledTable $gridTemplateColumns="minmax(70px, 70px) minmax(100px, 70px) minmax(150px, auto) minmax(150px, auto) minmax(200px, max-content) minmax(150px, auto) minmax(150px, auto) minmax(150px, auto) minmax(150px, auto)">
+              <StyledTable $gridTemplateColumns="minmax(70px, 70px) minmax(150px, 70px) minmax(75px, auto) minmax(170px, auto) minmax(180px, max-content) minmax(150px, auto) minmax(150px, auto) minmax(150px, auto) minmax(150px, auto)">
                 <StyledHeadCell>Items</StyledHeadCell>
                 <StyledHeadCell>Status</StyledHeadCell>
                 <StyledHeadCell>ID</StyledHeadCell>
@@ -264,7 +264,7 @@ export default function Orders() {
                           </Status> */}
                           <p>{row.status}</p>
                         </StyledCell>
-                        <StyledCell>{row._id.substring(0, 12)}</StyledCell>
+                        <StyledCell>#{row.orderID}</StyledCell>
                         <StyledCell>{row.user?.name}</StyledCell>
                         <StyledCell>
                           {dayjs(row.date).format("DD-MM-YYYY hh:mm A")}
