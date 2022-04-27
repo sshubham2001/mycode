@@ -8,6 +8,7 @@ import "./PrintOrder.style.css";
 const PrintOrder = () => {
   const history = useHistory();
   const order = useSelector((state) => state.dashboard.viewOrder);
+  const storeDetails = useSelector((state) => state.dashboard.store);
 
   return (
     <div>
@@ -26,12 +27,15 @@ const PrintOrder = () => {
         Go Back <i class="bi bi-arrow-left-circle-fill"></i>
       </button>
       <div className="ticket">
-        <p className="centered makebold">CAFE CASAVISTA </p>
-        <p className="centered">
-          #200, Kirloskar Layout Entrance, Bengaluru 560090
+        <p
+          className="centered makebold"
+          style={{ textTransform: "uppercase", paddingTop: 5 }}
+        >
+          {storeDetails?.title}
         </p>
+        <p className="centered">{storeDetails?.address}</p>
         <p className="centered">
-          {order.user?.name}
+          {order.shippingAddress?.name}
           <br />
           {order.shippingAddress?.number}
           <br />
@@ -44,7 +48,10 @@ const PrintOrder = () => {
               <p>Notes: {order.shippingAddress?.landmark}</p>
             </>
           )}
-          <small>{dayjs(order.date).format("DD-MM-YYYY hh:mm A")}</small>
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
+            <small>{dayjs(order.date).format("DD-MM-YYYY hh:mm A")}</small>
+            <small>Payment: {order?.payment}</small>
+          </div>
         </p>
         {/* <div style={{ marginBottom: "1px solid #000" }}></div> */}
         <table>
@@ -87,7 +94,7 @@ const PrintOrder = () => {
         </table>
         <br />
         <p className="centered">Thanks for your purchase ❤</p>
-        <p className="centered">Visit: cafecasavista.kard.live</p>
+        <p className="centered">Visit: {storeDetails?.link}</p>
       </div>
     </div>
   );

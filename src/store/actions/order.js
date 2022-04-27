@@ -21,7 +21,7 @@ export const fetchOrder = (history) => async (dispatch) => {
     };
     // Fetching Orders
     const fetchOrder = await axios.post(
-      `${process.env.REACT_APP_DATABASEURL}/admin/fetch-order`,
+      `${process.env.REACT_APP_DATABASEURL}/admin/fetch-orders`,
       { storeID },
       config
     );
@@ -82,6 +82,40 @@ export const updateOrder = (couponDetails, history) => async (dispatch) => {
       notify.success(message);
 
       history.push("/orders");
+    } else {
+      notify.error(message);
+    }
+  } catch (error) {
+    console.log("🤞HurraY ERROR", error);
+  }
+};
+
+export const fetchSingleOrder = (orderDetails, history) => async (dispatch) => {
+  try {
+    const token = localStorage && localStorage.getItem("token");
+    const storeID = localStorage && localStorage.getItem("storeID");
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    };
+    orderDetails.storeID = storeID;
+    const res = await axios.post(
+      `${process.env.REACT_APP_DATABASEURL}/admin/fetch-single-order`,
+      orderDetails,
+      config
+    );
+    const {
+      data: { status, message, data },
+    } = res;
+    status &&
+      dispatch({
+        type: "VIEW_ORDER",
+        payload: data,
+      });
+    if (status) {
+      notify.success(message);
     } else {
       notify.error(message);
     }

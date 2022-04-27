@@ -51,6 +51,7 @@ const SiteSettingsForm = () => {
   const [mapLink, setMapLink] = useState();
   const [instagramLink, setInstagramLink] = useState();
   const [facebookLink, setFacebookLink] = useState();
+  const [storeAddress, setStoreAddress] = useState();
 
   const handleMultiChange = ({ value }) => {
     setType(value);
@@ -92,6 +93,7 @@ const SiteSettingsForm = () => {
       mapLink,
       facebookLink,
       instagramLink,
+      address: storeAddress,
     };
     dispatch({ type: "START_LOADER" });
     dispatch(updateStoreDetails(storeSettingsData, history));
@@ -183,13 +185,23 @@ const SiteSettingsForm = () => {
           <Col md={8}>
             <DrawerBox>
               <FormFields>
-                <FormLabel>Site Name</FormLabel>
+                <FormLabel>Store Name</FormLabel>
                 <Input
                   disabled
                   name="site_name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder={storeDetail?.title}
+                />
+              </FormFields>
+
+              <FormFields>
+                <FormLabel>Store Address</FormLabel>
+                <Input
+                  name="store_address"
+                  value={storeAddress}
+                  onChange={(e) => setStoreAddress(e.target.value)}
+                  placeholder={storeDetail?.address}
                 />
               </FormFields>
 

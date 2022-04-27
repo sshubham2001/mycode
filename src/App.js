@@ -74,10 +74,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if(adminInfo?.storeID) {
-      dispatch(listOrderAlerts({storeId: adminInfo.storeID, limit: 3}));
+    if (adminInfo?.storeID) {
+      dispatch(listOrderAlerts({ storeId: adminInfo.storeID, limit: 3 }));
     }
-  }, [adminInfo])
+  }, [adminInfo]);
 
   useEffect(() => {
     if (adminValid && adminInfo) {
@@ -91,43 +91,15 @@ function App() {
       }
       if (channel) {
         dispatch(listenerNotification(channel));
-        socket.on("connect_error", () => console.log("Error connecting to sockets"));
+        socket.on("connect_error", () =>
+          console.log("Error connecting to sockets")
+        );
       }
     }
   }, [adminValid]);
 
-  const oldOrderId = localStorage.getItem("oldOrder");
-
-  // Fetching Notification API 10 mins each
-  // async function fetchAlerts() {
-  //   const res = await fetch(
-  //     `${process.env.REACT_APP_DATABASEURL}/public/fetch-new-alert`
-  //   );
-  //   console.log("Fetching Alert");
-  //   const data = await res.json();
-  //   data.status && dispatch({ type: "FETCH_ALERT", payload: data.data });
-  //   if (oldOrderId !== data?.data?.orderId) {
-  //     data.status && localStorage.setItem("oldOrder", data?.data?.orderId);
-  //   }
-  //   dispatch(fetchOrder());
-  //   // console.log(data?.data?.orderId, "ID");
-  //   // if (oldOrderId != data?.data?.orderId) {
-  //   //   console.log(oldOrderId, "OLD");
-  //   //   console.log("Playing Alert");
-  //   //   let audio = new Audio(
-  //   //     "https://notificationsounds.com/storage/sounds/file-b8_discreet-song.mp3"
-  //   //   );
-  //   //   audio.play();
-  //   // }
-  // }
-
-  // setInterval(() => {
-  //   fetchAlerts();
-  // }, 15 * 60 * 1000);
-
   return (
     <div>
-      {/* <ReactNotification /> */}
       <Modal />
       <Suspense fallback={<InLineLoader />}>
         <Switch>
