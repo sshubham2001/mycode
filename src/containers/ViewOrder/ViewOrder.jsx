@@ -5,8 +5,9 @@ import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { updateOrder } from "../../store/actions/order";
+import { fetchSingleOrder, updateOrder } from "../../store/actions/order";
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const orderStatusOptions = [
   { value: "Received", label: "Received" },
@@ -22,7 +23,11 @@ const ViewOrder = () => {
   const dispatch = useDispatch();
   const [orderStatus, setOrderStatus] = useState([]);
   const order = useSelector((state) => state.dashboard.viewOrder);
-  console.log(order);
+  const storeDetails = useSelector((state) => state.dashboard.store);
+  let orderData = { orderID: id };
+  useEffect(() => {
+    dispatch(fetchSingleOrder(orderData));
+  }, [id]);
   const handleUpdateOrderStatus = ({ value }) => {
     setOrderStatus(value);
     const data = {
@@ -52,12 +57,8 @@ const ViewOrder = () => {
           PRINT BILL <i class="bi bi-printer-fill"></i>
         </a>
         <div className="invoice-title">
-          <h2 style={{ textAlign: "center" }}>
-            {process.env.REACT_APP_STORE_NAME}
-          </h2>
-          <p style={{ textAlign: "center" }}>
-            #{process.env.REACT_APP_STORE_ADDRESS}
-          </p>
+          <h2 style={{ textAlign: "center" }}>{storeDetails?.title}</h2>
+          <p style={{ textAlign: "center" }}>{storeDetails?.address}</p>
           <div id="main-title">
             <h4>ORDER DETAILS</h4>
             <div classNameName="user-details">
