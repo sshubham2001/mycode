@@ -19,6 +19,7 @@ const PrintOrder = () => {
       >
         Print <i class="bi bi-printer-fill"></i>
       </button>
+     
       <button
         onClick={() => history.push(`/view-order/${order && order._id}`)}
         id="btnPrint"

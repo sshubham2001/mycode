@@ -144,3 +144,53 @@ body {
 .btn#later {
   margin-right: 2em;
 }
+
+.pickupTime{
+  text-align: center;
+}
+.MainDiv{
+ display: inline-block;
+ width: 100%;
+ /* text-align: center; */
+}
+.bookbtn-1{
+  height: 70px;
+  width: 25%;
+  background-color :bisque;
+  border-color: gold;
+  margin-right: 5px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.minsbtn-2{
+  height: 70px;
+  width: 23%;
+  margin-right: 2px;
+  background-color :bisque;
+  border-color: gold;
+  margin: 2px;
+  border-radius: 8px;
+  font-size: 14px;
+  
+}
+.minsbtn-3{
+  height: 70px;
+  width: 23%;
+  background-color :bisque;
+  border-color: gold;
+  margin: 3px;
+  border-radius: 8px;
+  font-size: 14px;
+ 
+}
+
+.minsbtn-4{
+  height: 70px;
+  width: 23%;
+  background-color :bisque;
+  border-color: gold;
+  margin-left: 5px;
+  border-radius: 8px;
+  font-size: 14px;
+
+}

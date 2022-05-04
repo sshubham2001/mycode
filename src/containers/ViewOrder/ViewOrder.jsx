@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Timer from '../../../src/containers/ViewOrder/Timer';
 import "./ViewOrder.style.css";
 import Select from "../../Components/Select/Select";
 import { useSelector } from "react-redux";
@@ -9,6 +10,10 @@ import { fetchSingleOrder, updateOrder } from "../../store/actions/order";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 
+
+
+
+
 const ViewOrder = () => {
   let { id } = useParams();
   const history = useHistory();
@@ -16,6 +21,7 @@ const ViewOrder = () => {
   const [orderStatus, setOrderStatus] = useState([]);
   const order = useSelector((state) => state.dashboard.viewOrder);
   const storeDetails = useSelector((state) => state.dashboard.store);
+
 
   const orderStatusOptions = storeDetails?.ownDelivery
     ? [
@@ -50,6 +56,12 @@ const ViewOrder = () => {
     setOrderStatus([]);
   };
 
+
+  
+
+  
+ 
+
   return (
     <div>
       <div className="invoice-card">
@@ -62,6 +74,8 @@ const ViewOrder = () => {
           searchable={false}
           onChange={handleUpdateOrderStatus}
         />
+        
+        <Timer />
         <a
           onClick={() => history.push(`/print-order/${order._id}`)}
           style={{ textAlign: "center", fontWeight: "bold" }}
